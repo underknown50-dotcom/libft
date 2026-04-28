@@ -1,7 +1,6 @@
 class GardenError(Exception):
     def __init__(self, message: str = "Unknown garden error") -> None:
-        self.message = message
-        super().__init__(self.message)
+        super().__init__(message)
 
 
 class PlantError(GardenError):
@@ -9,38 +8,51 @@ class PlantError(GardenError):
         super().__init__(message)
 
 
-def water_plant(plant_name: str) -> None:
-    if plant_name and plant_name[0].isupper():
-        print(f"Watering {plant_name}: [OK]")
-    else:
-        raise PlantError(f"Invalid plant name to water: '{plant_name}'")
-
-
-def test_watering_system() -> None:
+def display_header() -> None:
     print("=== Garden Watering System ===")
 
-    print("Testing valid plants...")
-    try:
-        print("Opening watering system")
-        water_plant("Tomato")
-        water_plant("Lettuce")
-        water_plant("Carrots")
-    finally:
-        print("Closing watering system")
 
-    print("Testing invalid plants...")
+def open_watering_system() -> None:
+    print("Opening watering system")
+
+
+def close_watering_system() -> None:
+    print("Closing watering system\n")
+
+
+def water_plant(plant_name: str) -> None:
+    if not plant_name or not plant_name[0].isupper():
+        raise PlantError(f"Invalid plant name to water: '{plant_name}'")
+
+    print(f"Watering {plant_name}: [OK]")
+
+
+def water_plants(plant_names: list[str]) -> None:
     try:
-        print("Opening watering system")
-        water_plant("Tomato")
-        water_plant("lettuce")
+        open_watering_system()
+
+        for plant_name in plant_names:
+            water_plant(plant_name)
+
     except PlantError as error:
         print(f"Caught PlantError: {error}")
         print("... ending tests and returning to main")
-        return  # ✅ REQUIRED
-    finally:
-        print("Closing watering system")
+        return
 
-    print("Cleanup always happens, even with errors!")
+    finally:
+        close_watering_system()
+
+
+def test_watering_system() -> None:
+    display_header()
+
+    print("Testing valid plants...")
+    water_plants(["Tomato", "Lettuce", "Carrots"])
+
+    print("Testing invalid plants...")
+    water_plants(["Tomato", "lettuce"])
+
+    print("\nCleanup always happens, even with errors!")
 
 
 if __name__ == "__main__":

@@ -7,37 +7,45 @@ def garden_operations(operation_number: int) -> None:
         open("/non/existent/file")
     elif operation_number == 3:
         "Hello" + 1
-    else:
-        return
+
+
+def display_header() -> None:
+    print("=== Garden Error Types Demo ===")
+
+
+def display_operation(operation_number: int) -> None:
+    print(f"Testing operation {operation_number}...")
+
+
+def display_success() -> None:
+    print("Operation completed successfully")
+
+
+def display_grouped_error(error: FileNotFoundError | TypeError) -> None:
+    print(f"Caught {error.__class__.__name__}: {error}")
+
+
+def handle_operation(operation_number: int) -> None:
+    display_operation(operation_number)
+
+    try:
+        garden_operations(operation_number)
+        display_success()
+    except ValueError as error:
+        print(f"Caught ValueError: {error}")
+    except ZeroDivisionError as error:
+        print(f"Caught ZeroDivisionError: {error}")
+    except (FileNotFoundError, TypeError) as error:
+        display_grouped_error(error)
 
 
 def test_error_types() -> None:
-    operations = [0, 1, 2, 3, 4]
+    display_header()
 
-    print("=== Garden Error Types Demo ===")
+    for operation_number in range(5):
+        handle_operation(operation_number)
 
-    for op in operations:
-        print(f"Testing operation {op}...")
-        try:
-            garden_operations(op)
-            print("Operation completed successfully")
-        except ValueError as error:
-            print(f"Caught ValueError: {error}")
-        except ZeroDivisionError as error:
-            print(f"Caught ZeroDivisionError: {error}")
-        except FileNotFoundError as error:
-            print(f"Caught FileNotFoundError: {error}")
-        except TypeError as error:
-            print(f"Caught TypeError: {error}")
-
-    # ✅ Required part: multiple exceptions in ONE except
-    print("\nTesting multiple exception catch...")
-    try:
-        garden_operations(0)  # any failing case
-    except (ValueError, ZeroDivisionError, FileNotFoundError, TypeError) as error:
-        print(f"Caught multiple error types: {error}")
-
-    print("All error types tested successfully!")
+    print("\nAll error types tested successfully!")
 
 
 if __name__ == "__main__":

@@ -21,29 +21,44 @@ def raise_water_error() -> None:
     raise WaterError("Not enough water in the tank!")
 
 
-def test_custom_errors() -> None:
-    print("=== Custom Garden Errors Demo ===")
+def display_header() -> None:
+    print("=== Custom Garden Errors Demo ===\n")
 
+
+def test_plant_error() -> None:
     print("Testing PlantError...")
+
     try:
         raise_plant_error()
     except PlantError as error:
         print(f"Caught PlantError: {error}")
 
+
+def test_water_error() -> None:
     print("Testing WaterError...")
+
     try:
         raise_water_error()
     except WaterError as error:
         print(f"Caught WaterError: {error}")
 
-    print("Testing catching all garden errors...")
+
+def test_all_garden_errors() -> None:
+    print("\nTesting catching all garden errors...")
+
     for function in (raise_plant_error, raise_water_error):
         try:
             function()
         except GardenError as error:
             print(f"Caught GardenError: {error}")
 
-    print("All custom error types work correctly!")
+
+def test_custom_errors() -> None:
+    display_header()
+    test_plant_error()
+    test_water_error()
+    test_all_garden_errors()
+    print("\nAll custom error types work correctly!")
 
 
 if __name__ == "__main__":
