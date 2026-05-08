@@ -1,50 +1,40 @@
 import sys
 
-
 def print_header() -> None:
     print("=== Command Quest ===")
-
 
 def print_program_name(program_name: str) -> None:
     print(f"Program name: {program_name}")
 
-
-def has_arguments(arguments: list[str]) -> bool:
-    return len(arguments) > 1
-
-
 def print_no_arguments() -> None:
     print("No arguments provided!")
 
+def print_arguments_count(count: int) -> None:
+    print(f"Arguments received: {count}")
 
-def print_arguments_count(arguments: list[str]) -> None:
-    print(f"Arguments received: {len(arguments) - 1}")
+def print_arguments(args: list[str]) -> None:
+    for idx, arg in enumerate(args, start=1):
+        print(f"Argument {idx}: {arg}")
 
-
-def print_arguments(arguments: list[str]) -> None:
-    index = 1
-    while index < len(arguments):
-        print(f"Argument {index}: {arguments[index]}")
-        index += 1
-
-
-def print_total_arguments(arguments: list[str]) -> None:
-    print(f"Total arguments: {len(arguments)}")
-
+def print_total_arguments(total: int) -> None:
+    print(f"Total arguments: {total}")
 
 def main() -> None:
-    arguments = sys.argv
+    argv = sys.argv
+    total_args = len(argv)
+    extra_args = argv[1:]
+    extra_count = len(extra_args)
 
     print_header()
-    print_program_name(arguments[0])
-    if has_arguments(arguments):
-        print_arguments_count(arguments)
-        print_arguments(arguments)
+    print_program_name(argv[0])
+
+    if extra_count > 0:
+        print_arguments_count(extra_count)
+        print_arguments(extra_args)
     else:
         print_no_arguments()
 
-    print_total_arguments(arguments)
-
+    print_total_arguments(total_args)
 
 if __name__ == "__main__":
     main()
