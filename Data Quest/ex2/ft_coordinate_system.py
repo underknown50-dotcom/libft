@@ -49,15 +49,10 @@ def distance_between_points(
     first_position: tuple[float, float, float],
     second_position: tuple[float, float, float],
 ) -> float:
-    x_distance = second_position[0] - first_position[0]
-    y_distance = second_position[1] - first_position[1]
-    z_distance = second_position[2] - first_position[2]
-
-    return math.sqrt(
-        (x_distance ** 2)
-        + (y_distance ** 2)
-        + (z_distance ** 2)
-    )
+    x1, y1, z1 = first_position
+    x2, y2, z2 = second_position
+    
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
 
 
 def distance_from_center(position: tuple[float, float, float]) -> float:
@@ -65,12 +60,9 @@ def distance_from_center(position: tuple[float, float, float]) -> float:
 
 
 def print_position_details(position: tuple[float, float, float]) -> None:
+    x, y, z = position
     print(f"Got a first tuple: {position}")
-    print(
-        f"It includes: X={position[0]}, "
-        f"Y={position[1]}, "
-        f"Z={position[2]}"
-    )
+    print(f"It includes: X={x}, Y={y}, Z={z}")
 
 
 def main() -> None:
