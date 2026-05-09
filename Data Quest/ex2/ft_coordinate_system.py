@@ -82,7 +82,7 @@ def main() -> None:
     print_position_details(first_position)
 
     center_distance = distance_from_center(first_position)
-    print(f"Distance to center: {round(center_distance, 4)}")
+    print(f"Distance to center: {center_distance:.4f}")
 
     print("\nGet a second set of coordinates")
     second_position = get_player_pos()
@@ -91,10 +91,7 @@ def main() -> None:
         first_position,
         second_position,
     )
-    print(
-        "Distance between the 2 sets of coordinates: "
-        f"{round(points_distance, 4)}"
-    )
+    print(f"Distance between the 2 sets of coordinates: {points_distance:.4f}")
 
 
 if __name__ == "__main__":
