@@ -45,14 +45,6 @@ def get_player_pos() -> tuple[float, float, float]:
             return position
 
 
-def distance_from_center(position: tuple[float, float, float]) -> float:
-    x = position[0]
-    y = position[1]
-    z = position[2]
-
-    return math.sqrt((x ** 2) + (y ** 2) + (z ** 2))
-
-
 def distance_between_points(
     first_position: tuple[float, float, float],
     second_position: tuple[float, float, float],
@@ -66,6 +58,10 @@ def distance_between_points(
         + (y_distance ** 2)
         + (z_distance ** 2)
     )
+
+
+def distance_from_center(position: tuple[float, float, float]) -> float:
+    return distance_between_points(position, (0.0, 0.0, 0.0))
 
 
 def print_position_details(position: tuple[float, float, float]) -> None:
