@@ -25,28 +25,27 @@ def convert_to_score(value: str) -> int | None:
 
 def parse_scores(arguments: list[str]) -> list[int]:
     scores = []
-    index = 1
-
-    while index < len(arguments):
-        score = convert_to_score(arguments[index])
-
+    for arg in arguments[1:]:
+        score = convert_to_score(arg)
         if score is not None:
             scores.append(score)
-
-        index += 1
-
     return scores
 
 
 def print_score_analytics(scores: list[int]) -> None:
+    if not scores:
+        print("No valid scores to analyze.")
+        return
+    
     total_score = sum(scores)
     high_score = max(scores)
     low_score = min(scores)
+    average_score = total_score / len(scores)
 
     print(f"Scores processed: {scores}")
     print(f"Total players: {len(scores)}")
     print(f"Total score: {total_score}")
-    print(f"Average score: {total_score / len(scores)}")
+    print(f"Average score: {average_score}")
     print(f"High score: {high_score}")
     print(f"Low score: {low_score}")
     print(f"Score range: {high_score - low_score}")
