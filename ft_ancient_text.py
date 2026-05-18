@@ -19,7 +19,7 @@ def display_header(filename: str) -> None:
 
 
 def read_and_display_file(filename: str) -> None:
-    f: Optional[TextIO] = None
+    f = None
     try:
         f = open(filename, 'r')
         for line in f:
