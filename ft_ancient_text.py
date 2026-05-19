@@ -19,7 +19,6 @@ def display_header(filename: str) -> None:
 
 
 def read_file_lines(filename: str) -> Optional[List[str]]:
-    """Return list of lines on success, None on error. Does NOT print closed message."""
     lines: List[str] = []
     f = None
     try:
@@ -32,17 +31,15 @@ def read_file_lines(filename: str) -> Optional[List[str]]:
         return None
     finally:
         if f is not None:
-            f.close()   # close the file, but do NOT print anything here
+            f.close()
 
 
 def display_content(lines: List[str]) -> None:
-    """Print each line as-is (preserving original newlines)."""
     for line in lines:
         print(line, end='')
 
 
 def display_closed_message(filename: str) -> None:
-    """Print the closed message with a blank line after."""
     print(f"File '{filename}' closed.\n")
 
 
@@ -57,7 +54,7 @@ def main() -> int:
         return 1
 
     display_content(lines)
-    display_closed_message(filename)   # ← Now prints AFTER content
+    display_closed_message(filename)
     return 0
 
 
