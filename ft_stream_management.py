@@ -1,84 +1,113 @@
 import sys
-from typing import NoReturn, Optional, TextIO, List
+from typing import Optional, TextIO, List
 
 
-def print_usage() -> NoReturn:
+def print_usage() -> None:
     sys.stdout.write("Usage: ft_stream_management.py <file>\n")
-    sys.exit(1)
 
 
-def get_filename() -> str:
+def get_filename() -> Optional[str]:
     if len(sys.argv) != 2:
         print_usage()
+        return None
     return sys.argv[1]
 
 
 def display_header(filename: str) -> None:
-    sys.stdout.write("== Cyber Archives Recovery & Preservation ==\n")
     sys.stdout.write(f"Accessing file '{filename}'\n\n")
 
 
-def read_and_display_file(filename: str) -> List[str]:
+def read_file_lines(filename: str) -> Optional[List[str]]:
     lines: List[str] = []
     f: Optional[TextIO] = None
     try:
         f = open(filename, 'r')
         for line in f:
-            sys.stdout.write(line)
             lines.append(line)
+        return lines
     except OSError as e:
         sys.stderr.write(f"[STDERR] Error opening file '{filename}': {e}\n")
-        sys.exit(1)
+        return None
     finally:
         if f is not None:
             f.close()
-            sys.stdout.write(f"File '{filename}' closed.\n\n")
-    return lines
 
 
-def transform_and_display(lines: List[str]) -> List[str]:
-    transformed: List[str] = []
-    sys.stdout.write("Transform data:\n\n")
+def display_content(lines: List[str]) -> None:
     for line in lines:
-        new_line = line.rstrip('\n') + '#\n'
-        sys.stdout.write(new_line)
-        transformed.append(new_line)
+        sys.stdout.write(line)
     sys.stdout.write("\n")
+
+
+def display_closed_message(filename: str) -> None:
+    sys.stdout.write(f"File '{filename}' closed.\n\n")
+
+
+def transform_lines(lines: List[str]) -> List[str]:
+    transformed: List[str] = []
+    for line in lines:
+        transformed.append(line.rstrip('\n') + '#\n')
     return transformed
 
 
-def ask_and_save(transformed: List[str]) -> None:
+def display_transformed_content(lines: List[str]) -> None:
+    sys.stdout.write("Transform data:\n\n")
+    for line in lines:
+        sys.stdout.write(line)
+    sys.stdout.write("\n")
+
+
+def ask_output_filename() -> Optional[str]:
     sys.stdout.write("Enter new file name (or empty): ")
     sys.stdout.flush()
-    new_filename = sys.stdin.readline().rstrip('\n')
-    if not new_filename:
-        sys.stdout.write("Not saving data.\n")
-        return
+    name = sys.stdin.readline().rstrip('\n')
+    return name if name else None
 
-    f_out: Optional[TextIO] = None
+
+def save_lines_to_file(filename: str, lines: List[str]) -> bool:
+    f: Optional[TextIO] = None
     try:
-        f_out = open(new_filename, 'w')
-        f_out.writelines(transformed)
-        sys.stdout.write(f"Saving data to '{new_filename}'\n")
-        sys.stdout.write(f"Data saved in file '{new_filename}'.\n")
+        f = open(filename, 'w')
+        f.writelines(lines)
+        sys.stdout.write(f"Saving data to '{filename}'\n")
+        sys.stdout.write(f"Data saved in file '{filename}'.\n")
+        return True
     except OSError as e:
-        sys.stderr.write(
-            f"[STDERR] Error opening file '{new_filename}': {e}\n"
-        )
+        sys.stderr.write(f"[STDERR] Error opening file '{filename}': {e}\n")
         sys.stdout.write("Data not saved.\n")
-        sys.exit(1)
+        return False
     finally:
-        if f_out is not None:
-            f_out.close()
+        if f is not None:
+            f.close()
 
 
-def main() -> None:
+def main() -> int:
     filename = get_filename()
+    if filename is None:
+        return 1
+
+    # Header
     display_header(filename)
-    original_lines = read_and_display_file(filename)
-    transformed_lines = transform_and_display(original_lines)
-    ask_and_save(transformed_lines)
+
+    original_lines = read_file_lines(filename)
+    if original_lines is None:
+        return 1
+
+    display_content(original_lines)
+    display_closed_message(filename)
+
+    transformed_lines = transform_lines(original_lines)
+
+    display_transformed_content(transformed_lines)
+
+    output_filename = ask_output_filename()
+    if output_filename is None:
+        sys.stdout.write("Not saving data.\n")
+        return 0
+
+    success = save_lines_to_file(output_filename, transformed_lines)
+    return 0 if success else 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
