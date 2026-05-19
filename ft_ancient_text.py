@@ -23,13 +23,13 @@ def display_header(filename: str) -> None:
 def read_file_lines(filename: str) -> Optional[List[str]]:
     """Return list of lines on success, None on error. Does NOT print closed message."""
     lines: List[str] = []
-    f: Optional[TextIO] = None
+    f = None
     try:
         f = open(filename, 'r')
         for line in f:
             lines.append(line)
         return lines
-    except (OSError, UnicodeDecodeError) as e:
+    except OSError as e:
         print(f"Error opening file '{filename}': {e}")
         return None
     finally:
