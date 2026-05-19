@@ -64,7 +64,7 @@ def ask_output_filename() -> Optional[str]:
 
 
 def save_lines_to_file(filename: str, lines: List[str]) -> bool:
-    f: Optional[TextIO] = None
+    f = None
     try:
         f = open(filename, 'w')
         f.writelines(lines)
