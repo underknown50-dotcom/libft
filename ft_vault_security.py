@@ -1,3 +1,4 @@
+import os
 from typing import Tuple, Union, Optional
 
 
@@ -39,9 +40,10 @@ def secure_archive(
     mode = normalize_action(action)
     if not mode:
         return (False, f"Invalid action: {action}. Use 'r' or 'w'.")
+
     if mode == 'r':
         return read_file_safe(filename)
-    else:
+    else:  # mode == 'w'
         if content is None:
             return (False, "Write action requires content parameter.")
         return write_file_safe(filename, content)
@@ -54,10 +56,7 @@ def demo_nonexistent_file() -> None:
 
 def demo_inaccessible_file() -> None:
     result = secure_archive('/etc/master.passwd', 'r')
-    print(
-        "Using 'secure_archive' to read from an inaccessible file: "
-        f"{result}"
-    )
+    print(f"Using 'secure_archive' to read from an inaccessible file: {result}")
 
 
 def demo_read_regular_file() -> None:
@@ -66,14 +65,13 @@ def demo_read_regular_file() -> None:
         "[FRAGMENT 002] Knowledge must survive the entropy wars\n"
         "[FRAGMENT 003] Every byte saved is a victory against oblivion\n"
     )
+
     secure_archive('temp_read_test.txt', 'w', test_content)
+
     result = secure_archive('temp_read_test.txt', 'r')
-    print(
-        "Using 'secure_archive' to read from a regular file: "
-        f"{result}"
-    )
+    print(f"Using 'secure_archive' to read from a regular file: {result}")
+
     try:
-        import os
         os.remove('temp_read_test.txt')
     except OSError:
         pass
@@ -85,13 +83,12 @@ def demo_write_new_file() -> None:
         "[FRAGMENT 002] Knowledge must survive the entropy wars\n"
         "[FRAGMENT 003] Every byte saved is a victory against oblivion\n"
     )
+
     result = secure_archive('new_archive.txt', 'w', test_content)
-    print(
-        "Using 'secure_archive' to write previous content to a new file: "
-        f"{result}"
-    )
+    print(f"Using 'secure_archive' to write previous content to a new file: {result}")
+
+    # Cleanup
     try:
-        import os
         os.remove('new_archive.txt')
     except OSError:
         pass
