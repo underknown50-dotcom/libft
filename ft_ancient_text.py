@@ -1,12 +1,12 @@
 import sys
-from typing import Optional, TextIO, List
+import typing
 
 
 def print_usage() -> None:
     print("Usage: ft_ancient_text.py <file>")
 
 
-def get_filename() -> Optional[str]:
+def get_filename() -> str | None:
     if len(sys.argv) != 2:
         print_usage()
         return None
@@ -14,49 +14,60 @@ def get_filename() -> Optional[str]:
 
 
 def display_header(filename: str) -> None:
-    print("== Cyber Archives Recovery ==")
+    print("=== Cyber Archives Recovery ===")
     print(f"Accessing file '{filename}'")
 
 
-def read_file_lines(filename: str) -> Optional[List[str]]:
-    lines: List[str] = []
-    f = None
+def read_file_lines(filename: str) -> list[str] | None:
+    lines: list[str] = []
+    file: typing.IO[str] | None = None
+
     try:
-        f = open(filename, 'r')
-        for line in f:
+        file = open(filename, "r")
+
+        for line in file:
             lines.append(line)
+
         return lines
-    except OSError as e:
-        print(f"Error opening file '{filename}': {e}")
+
+    except OSError as error:
+        print(f"Error opening file '{filename}': {error}")
         return None
+
     finally:
-        if f is not None:
-            f.close()
+        if file is not None:
+            file.close()
 
 
-def display_content(lines: List[str]) -> None:
+def display_content(lines: list[str]) -> None:
+    print("---")
+
     for line in lines:
-        print(line, end='')
+        print(line, end="")
+
+    print("---")
 
 
 def display_closed_message(filename: str) -> None:
-    print(f"File '{filename}' closed.\n")
+    print(f"File '{filename}' closed.")
 
 
-def main() -> int:
+def main() -> None:
     filename = get_filename()
+
     if filename is None:
-        return 1
+        return
 
     display_header(filename)
+
     lines = read_file_lines(filename)
+
     if lines is None:
-        return 1
+        return
 
     display_content(lines)
     display_closed_message(filename)
-    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
