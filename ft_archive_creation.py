@@ -59,7 +59,7 @@ def display_transformed_content(lines: List[str]) -> None:
 
 
 def ask_output_filename() -> Optional[str]:
-    name = input("Enter new file name (or empty): ").strip()
+    name = input("Enter new file name (or empty): ")
     return name if name else None
 
 
