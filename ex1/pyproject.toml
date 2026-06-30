@@ -1,0 +1,19 @@
+[project]
+name = "matrix-loader"
+version = "0.1.0"
+description = "Matrix data loading and analysis pipeline"
+authors = [
+    {name = "none"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy (>=2.4.6,<3.0.0)",
+    "pandas (>=3.0.3,<4.0.0)",
+    "matplotlib (>=3.11.0,<4.0.0)",
+    "requests (>=2.34.2,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
