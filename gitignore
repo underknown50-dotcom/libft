@@ -1,0 +1,10 @@
+# Environment variables
+.env
+srcs/.env
+**/srcs/.env
+**/.env
+
+# Secrets / Passwords
+secrets/*.txt
+**/secrets/*.txt
+!**/secrets/.gitkeep
