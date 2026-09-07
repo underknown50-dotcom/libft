@@ -1,0 +1,19 @@
+# Domain & Persistent Storage
+DOMAIN_NAME=your_login.42.fr
+DATA_PATH=/home/your_login/data
+
+# MariaDB Setup
+MYSQL_DATABASE=wordpress
+ADMIN_USER=wp_user
+REGULAR_USER=regular_user
+
+# WordPress Setup
+WORDPRESS_URL=https://your_login.42.fr
+WP_TITLE=Inception your_login
+# Administrator username must NOT contain admin, Admin, administrator, Administrator
+WORDPRESS_ADMIN_USER=chief_login
+WORDPRESS_ADMIN_PASS=your_admin_password
+WORDPRESS_ADMIN_EMAIL=your_login@student.42.fr
+WORDPRESS_USER=author_login
+WORDPRESS_USER_EMAIL=author@student.42.fr
+WORDPRESS_USER_PASS=your_user_password
