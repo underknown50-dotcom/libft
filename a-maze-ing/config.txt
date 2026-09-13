@@ -1,0 +1,16 @@
+# Default Maze Generation Configuration
+# All keys are mandatory except optional ones (SEED, etc.)
+
+# Dimensions (number of cells)
+WIDTH=20
+HEIGHT=15
+
+# Coordinates (x,y) with 0 <= x < WIDTH and 0 <= y < HEIGHT
+ENTRY=0,0
+EXIT=19,14
+
+# Output filename for the hex maze and solution path
+OUTPUT_FILE=maze.txt
+
+# Maze mode: True for single-path perfect maze, False for Pac-Man board
+PERFECT=True
