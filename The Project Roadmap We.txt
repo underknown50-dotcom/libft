@@ -1,0 +1,15 @@
+The Project Roadmap
+We have structured the project into 10 focused milestones (see the full design in 
+implementation_plan.md
+):
+
+Step 1: Project Skeleton, Virtual Environment, Makefile & Packaging Config
+Step 2: Configuration File Parser & Graceful Error Handling
+Step 3: Maze Grid Representation, Coordinate System & Hex Encoding
+Step 4: The "42" Embedded Pattern Generation
+Step 5: Maze Generation Core (PERFECT=True vs PERFECT=False Pac-Man mode)
+Step 6: Pathfinding Solver (Breadth-First Search for shortest path)
+Step 7: Building & Testing the Reusable Package (mazegen-*)
+Step 8: Interactive Terminal Visualizer (ANSI color, path toggle, regen)
+Step 9: CLI Integration (a_maze_ing.py) & Output File Generation
+Step 10: Comprehensive Testing, Strict Linting (make lint-strict), and README.md
