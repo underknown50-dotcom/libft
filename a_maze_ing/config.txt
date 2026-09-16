@@ -1,0 +1,21 @@
+# ==========================================
+# Default Configuration for A-Maze-ing
+# ==========================================
+
+# Dimensions of the maze (number of cells)
+WIDTH=20
+HEIGHT=15
+
+# Entry and Exit coordinates (0-indexed x,y)
+ENTRY=0,0
+EXIT=19,14
+
+# Output filename for the generated maze
+OUTPUT_FILE=maze.txt
+
+# Maze generation mode: True for a single-path perfect maze,
+# False for a Pac-Man playable board with loops and open corners/centre.
+PERFECT=True
+
+# Optional seed for deterministic reproducibility
+SEED=42
